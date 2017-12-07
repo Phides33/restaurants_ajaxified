@@ -1,0 +1,14 @@
+// Here you generate *JavaScript* that would be executed in the browser
+<% if @review.errors.any? %>
+  $('#review_form').html('<%= j render 'reviews/form', restaurant: @restaurant, review: @review %>');
+<% else %>
+  var newReview = $('<%= j render 'reviews/review', review: @review %>');
+  // Au lieu d'ajouter simplement la nouvelle review, la place à la fin avec un effet slideDown
+  newReview.hide();
+  $('#reviews').append(newReview);
+  newReview.slideDown();
+  // Met à jour le compteur de nb de reviews
+  $('#reviews_count').html("<%= j pluralize @restaurant.reviews.size, "review" %>");
+  // Affiche un nouveau formulaire de review vierge
+  $('#review_form').html('<%= j render 'reviews/form', restaurant: @restaurant, review: @new_review %>');
+<% end %>
